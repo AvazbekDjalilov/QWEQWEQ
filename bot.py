@@ -18,7 +18,7 @@ album_groups = defaultdict(list)
 
 def render_html(text, entities):
     if not entities:
-        return html.escape(text)
+        return html.escape(text).replace('\n', '<br>')
     result = []
     last_offset = 0
     skip_types = (
@@ -26,14 +26,14 @@ def render_html(text, entities):
         'MessageEntityMentionName', 'MessageEntityHashtag'
     )
     for entity in sorted(entities, key=lambda e: e.offset):
-        entity_type = type(entity).__name__
+        entity_type = type(entity).name
         if last_offset < entity.offset:
-            result.append(html.escape(text[last_offset:entity.offset]))
+            result.append(html.escape(text[last_offset:entity.offset]).replace('\n', '<br>'))
         entity_text = text[entity.offset:entity.offset + entity.length]
         if entity_type in skip_types:
             last_offset = entity.offset + entity.length
             continue
-        entity_html = html.escape(entity_text)
+        entity_html = html.escape(entity_text).replace('\n', '<br>')
         if isinstance(entity, MessageEntityBold):
             entity_html = f"<b>{entity_html}</b>"
         elif isinstance(entity, MessageEntityItalic):
@@ -45,11 +45,12 @@ def render_html(text, entities):
         elif isinstance(entity, MessageEntityCode):
             entity_html = f"<code>{entity_html}</code>"
         elif isinstance(entity, MessageEntityPre):
+            entity_html = html.escape(entity_text)
             entity_html = f"<pre>{entity_html}</pre>"
         result.append(entity_html)
         last_offset = entity.offset + entity.length
     if last_offset < len(text):
-        result.append(html.escape(text[last_offset:]))
+        result.append(html.escape(text[last_offset:]).replace('\n', '<br>'))
     return ''.join(result)
 
 @client.on(events.NewMessage(chats=source_channels))
