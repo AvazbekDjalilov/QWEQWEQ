@@ -9,7 +9,7 @@ api_hash = '0cb203071f7c204af47bd8e3193cbd71'
 
 # Источники и цель
 source_channels = ['CodeAntipova', 'ecotopor']
-target_channel = 'nuwseco'
+target_channel = 'World_Nuws'
 
 client = TelegramClient('session_name', api_id, api_hash)
 album_groups = defaultdict(list)
