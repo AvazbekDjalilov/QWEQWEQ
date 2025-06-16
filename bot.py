@@ -4,8 +4,8 @@ import asyncio
 from collections import defaultdict
 
 # Ваши API_ID и API_HASH
-api_id = 23985072
-api_hash = '525ec425d540c099eed5312e5cf57a00'
+api_id = 21315612
+api_hash = '0cb203071f7c204af47bd8e3193cbd71'
 
 # Источники и цель
 source_channels = ['CodeAntipova', 'ecotopor']
